@@ -1,0 +1,13 @@
+{
+  "name": "solar-system-explorer-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "api"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=client",
+    "start:api": "npm start --workspace=api"
+  }
+}
