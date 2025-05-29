@@ -1,9 +1,8 @@
-// solar-system-explorer/client/src/components/Planet.tsx
 import React, { useRef, useEffect, useMemo, forwardRef } from 'react';
 import { useGLTF } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber'; // <-- Tambahkan useFrame di sini
+import { useFrame } from '@react-three/fiber'; 
 import { Mesh, Box3, Vector3 } from 'three';
-import * as THREE from 'three';
+
 
 interface PlanetProps {
   modelPath: string;
@@ -14,13 +13,11 @@ interface PlanetProps {
   visible?: boolean;
 }
 
-// Gunakan forwardRef di sini untuk meneruskan ref dari parent
+
 const Planet = forwardRef<Mesh, PlanetProps>(({ modelPath, position, scale = 1, onClick, onLoad, visible = true }, ref) => {
   const { scene } = useGLTF(modelPath);
-  const meshRef = useRef<Mesh>(null!); // Ref lokal untuk mesh
+  const meshRef = useRef<Mesh>(null!); 
 
-  // Gabungkan ref yang diteruskan dengan ref lokal
-  // Ini memastikan ref dari parent dan ref lokal bisa digunakan
   React.useImperativeHandle(ref, () => meshRef.current!, [meshRef.current]);
 
   const stableClonedScene = useMemo(() => {
@@ -53,8 +50,7 @@ const Planet = forwardRef<Mesh, PlanetProps>(({ modelPath, position, scale = 1, 
 
   // Rotasi Otomatis Model
   useFrame(() => {
-    if (meshRef.current && visible) { // Pastikan mesh ada dan terlihat
-      // Rotasi di sumbu Y (vertikal). Sesuaikan kecepatan rotasi (0.002)
+    if (meshRef.current && visible) { 
       meshRef.current.rotation.y += 0.002;
     }
   });
@@ -63,7 +59,7 @@ const Planet = forwardRef<Mesh, PlanetProps>(({ modelPath, position, scale = 1, 
     <mesh
       position={position}
       scale={[scale, scale, scale]}
-      ref={meshRef} // <-- Kaitkan ref lokal ke mesh
+      ref={meshRef} 
       onClick={onClick}
       onPointerOver={(e) => {
         e.stopPropagation();
