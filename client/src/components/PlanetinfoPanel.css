@@ -1,0 +1,219 @@
+.planet-info-panel {
+  /* Properti utama panel, dari versi sebelumnya */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Ini akan di-override oleh inline style saat panelPosition diatur */
+  background-color: rgba(30, 30, 40, 0.95); /* Latar belakang gelap semi-transparan */
+  border: 1px solid rgba(70, 70, 90, 0.8);
+  border-radius: 10px;
+  padding: 25px;
+  width: 350px; /* Lebar panel */
+  max-width: 90%;
+  max-height: 80vh; /* Batasi tinggi agar bisa discroll */
+  overflow-y: auto; /* Aktifkan scroll jika konten terlalu panjang */
+  color: white;
+  z-index: 100; /* Pastikan z-index lebih tinggi dari blur-overlay */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+
+  /* Properti untuk animasi fade-in/out */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  /* transform dan transform-origin akan diatur oleh inline style di PlanetInfoPanel.tsx */
+}
+
+.planet-info-panel.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Penyesuaian Padding Atas untuk Kontrol Header */
+.planet-info-panel {
+  padding-top: 50px; /* Tambahkan padding atas agar ada ruang untuk tombol di header */
+}
+
+
+/* Styling untuk judul planet */
+.planet-info-panel h2 {
+  color: #a0dfff; /* Warna judul planet */
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Styling untuk paragraf deskripsi */
+.planet-info-panel p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Styling untuk sub-judul (Fakta, Tanya AI) */
+.planet-info-panel h3 {
+  color: #c0f0ff;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Styling untuk daftar fakta */
+.planet-info-panel ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  padding-left: 0;
+}
+
+/* Styling untuk setiap item fakta */
+.planet-info-panel li {
+  margin-bottom: 5px;
+}
+
+/* Bagian AI Chat */
+.ai-chat-section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Form input chat AI */
+.ai-chat-section form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+/* Input teks AI */
+.ai-chat-section input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background-color: #333;
+  color: white;
+  font-size: 1em;
+}
+
+/* Placeholder input teks AI */
+.ai-chat-section input[type="text"]::placeholder {
+  color: #aaa;
+}
+
+/* Tombol submit AI */
+.ai-chat-section button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Efek hover tombol AI */
+.ai-chat-section button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+/* Tombol AI saat disabled */
+.ai-chat-section button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+/* Respons AI */
+.ai-response {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  white-space: pre-wrap; /* Mempertahankan spasi dan baris baru */
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+/* Pesan error AI */
+.ai-error {
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+
+/* --- Kontrol Header Panel (Tombol Tutup dan Toggle Visibilitas) --- */
+.panel-header-controls {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 10px; /* Jarak antara tombol */
+  z-index: 10; /* Pastikan di atas konten panel */
+}
+
+/* Tombol Tutup (X) */
+.close-button {
+  position: static; /* Ganti dari absolute agar diatur oleh flexbox parent */
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.8em;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.close-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Tombol Toggle Visibilitas (Ikon Mata) */
+.toggle-visibility-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-visibility-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.toggle-visibility-button svg {
+  width: 24px; /* Ukuran ikon */
+  height: 24px;
+  transition: stroke 0.2s ease; /* Transisi warna ikon */
+}
+
+.eye-icon-visible {
+  stroke: #007bff; /* Warna biru saat terlihat */
+}
+
+.eye-icon-hidden {
+  stroke: #ff6b6b; /* Warna merah saat tersembunyi */
+}
+
+/* Media queries untuk responsivitas panel (Sudah ada, tapi ini revisi terakhir) */
+@media (max-width: 992px) {
+  .planet-info-panel {
+    width: 90%;
+    max-width: 500px;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) scale(0.9) !important;
+  }
+  .planet-info-panel.visible {
+    transform: translate(-50%, -50%) scale(1) !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .planet-info-panel {
+    width: 95%;
+    padding: 15px;
+    font-size: 0.9em;
+  }
+  .planet-info-panel h2 {
+    font-size: 1.5em;
+  }
+}
