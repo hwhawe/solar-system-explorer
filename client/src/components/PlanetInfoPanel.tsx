@@ -1,5 +1,5 @@
 import React, { useState, useEffect, type FormEvent } from 'react';
-import './PlanetInfoPanel.css';
+import './PlanetinfoPanel.css';
 
 interface PlanetInfo {
   name: string;
@@ -87,10 +87,9 @@ const PlanetInfoPanel: React.FC<PlanetInfoPanelProps> = ({ planet, onClose, pane
 
   return (
     <div className={`planet-info-panel ${isVisible ? 'visible' : ''}`} style={panelStyle}>
-      {/* Container untuk tombol tutup dan tombol toggle visibilitas */}
       <div className="panel-header-controls">
         <button className="toggle-visibility-button" onClick={onToggleShowOtherPlanets} title={showOtherPlanets ? 'Sembunyikan Planet Lain' : 'Tampilkan Planet Lain'}>
-          {/* Ikon mata SVG */}
+          
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -102,10 +101,8 @@ const PlanetInfoPanel: React.FC<PlanetInfoPanelProps> = ({ planet, onClose, pane
             className={showOtherPlanets ? 'eye-icon-visible' : 'eye-icon-hidden'}
           >
             {showOtherPlanets ? (
-              // Mata terbuka
               <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
             ) : (
-              // Mata tertutup (dengan garis)
               <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-10-7-10-7a18.06 18.06 0 0 1 5-6.36M2 2l20 20M14.93 14.93A4 4 0 0 1 12 16c-1.31 0-2.5-.5-3.39-1.39" />
             )}
             <circle cx="12" cy="12" r="3" />
@@ -140,13 +137,6 @@ const PlanetInfoPanel: React.FC<PlanetInfoPanelProps> = ({ planet, onClose, pane
         {errorAi && <p className="ai-error">{errorAi}</p>}
         {aiResponse && <div className="ai-response">{aiResponse}</div>}
       </div>
-
-      {/* panel-controls yang lama dihapus */}
-      {/* <div className="panel-controls">
-        <button onClick={onToggleShowOtherPlanets}>
-          {showOtherPlanets ? 'Sembunyikan Planet Lain' : 'Tampilkan Planet Lain'}
-        </button>
-      </div> */}
     </div>
   );
 };
