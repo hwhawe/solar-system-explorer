@@ -1,25 +1,24 @@
 import { Canvas, useThree } from '@react-three/fiber';
-import { Stars, OrbitControls } from '@react-three/drei'; // Import OrbitControls
+import { Stars, OrbitControls } from '@react-three/drei'; 
 import Planet from './components/Planet';
 import CameraControl from './components/CameraControl';
 import PlanetInfoPanel from './components/PlanetInfoPanel';
 import './App.css';
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Vector3, Mesh } from 'three'; // Pastikan Mesh diimpor dari three
-import { planetData } from './data/planetData'; // Pastikan path ini benar
+import { Vector3, Mesh } from 'three'; 
+import { planetData } from './data/planetData'; 
 
-// --- Komponen Pembantu untuk Logika Scene dan Kamera ---
-// Interface untuk props komponen SceneLogic
+
 interface SceneLogicProps {
   currentPlanetIndex: number;
   planetPositions: [number, number, number][];
   planetActualSizes: Vector3[];
-  selectedPlanet: typeof planetData[0] | null; // Untuk mengetahui kapan panel aktif
-  selectedPlanetMesh: Mesh | null; // <-- Properti penting: Mesh objek planet yang dipilih
-  setPanelPosition: React.Dispatch<React.SetStateAction<{ x: number; y: number } | null>>; // Callback untuk mengatur posisi panel 2D
+  selectedPlanet: typeof planetData[0] | null; 
+  selectedPlanetMesh: Mesh | null; 
+  setPanelPosition: React.Dispatch<React.SetStateAction<{ x: number; y: number } | null>>; 
 }
 
-// Komponen ini akan mengelola CameraControl kustom dan OrbitControls kondisional
+
 const SceneLogic: React.FC<SceneLogicProps> = ({
   currentPlanetIndex,
   planetPositions,
@@ -28,27 +27,26 @@ const SceneLogic: React.FC<SceneLogicProps> = ({
   selectedPlanetMesh,
   setPanelPosition,
 }) => {
-  const { camera, gl } = useThree(); // useThree di sini, karena SceneLogic berada di dalam Canvas
-  const orbitControlsRef = useRef<any>(null); // Ref untuk OrbitControls global
+  const { camera, gl } = useThree(); 
+  const orbitControlsRef = useRef<any>(null); 
 
-  // Efek untuk menghitung posisi 2D panel di layar
+  
   useEffect(() => {
     if (selectedPlanet) {
-      // Posisi panel (tengah kanan layar)
+      
       const offsetFromEdge = gl.domElement.clientWidth * 0.20;
       const panelX = gl.domElement.clientWidth - offsetFromEdge;
       const panelY = gl.domElement.clientHeight / 2;
       setPanelPosition({ x: panelX, y: panelY });
 
-      // Saat planet dipilih, pastikan OrbitControls menargetkan planet tersebut
+   
       if (orbitControlsRef.current && selectedPlanetMesh) {
         orbitControlsRef.current.target.copy(selectedPlanetMesh.position);
         orbitControlsRef.current.update();
-        // Opsional: Atur posisi kamera awal agar tidak terlalu dekat/jauh saat OrbitControls mengambil alih
-        // Ini bisa membantu transisi mulus dari CameraControl ke OrbitControls
+        
         const currentPlanetSize = planetActualSizes[currentPlanetIndex];
         const maxDim = Math.max(currentPlanetSize.x, currentPlanetSize.y, currentPlanetSize.z);
-        const distance = Math.max(8.0, maxDim * 2.5); // Jarak adaptif yang nyaman
+        const distance = Math.max(8.0, maxDim * 2.5); 
 
         camera.position.set(
           selectedPlanetMesh.position.x,
@@ -66,31 +64,30 @@ const SceneLogic: React.FC<SceneLogicProps> = ({
 
   return (
     <>
-      {/* CameraControl kustom (aktif jika tidak ada planet yang dipilih) */}
+   
       <CameraControl
         targetIndex={currentPlanetIndex}
         planetPositions={planetPositions}
         planetActualSizes={planetActualSizes}
-        enabled={!selectedPlanet} // Aktif hanya jika tidak ada planet yang dipilih
+        enabled={!selectedPlanet} 
       />
 
-      {/* OrbitControls - Selalu render, tapi aktifkan/nonaktifkan interaksi */}
-      {/* Aktifkan interaksi hanya jika ada planet yang dipilih */}
+      
       <OrbitControls
         ref={orbitControlsRef}
-        enabled={Boolean(selectedPlanet && selectedPlanetMesh)} // Aktif hanya jika ada planet yang dipilih DAN mesh tersedia
-        enablePan={true} // Aktifkan pan (geser view)
-        enableZoom={true} // Aktifkan zoom
-        enableRotate={true} // Aktifkan rotasi
-        // Batasi zoom agar tidak menembus planet
+        enabled={Boolean(selectedPlanet && selectedPlanetMesh)}
+        enablePan={true} 
+        enableZoom={true} 
+        enableRotate={true} 
+        
         minDistance={selectedPlanetMesh ? Math.max(0.5, planetActualSizes[currentPlanetIndex].length() * 0.8) : 1.0}
-        maxDistance={selectedPlanetMesh ? Math.max(8.0, planetActualSizes[currentPlanetIndex].length() * 1.5) : 1000} // <-- Diubah: 8.0 dan 1.5
-        target={selectedPlanetMesh ? selectedPlanetMesh.position : new Vector3(0,0,0)} // Targetkan posisi mesh yang dipilih
+        maxDistance={selectedPlanetMesh ? Math.max(8.0, planetActualSizes[currentPlanetIndex].length() * 1.5) : 1000} 
+        target={selectedPlanetMesh ? selectedPlanetMesh.position : new Vector3(0,0,0)}
       />
     </>
   );
 };
-// --- Akhir Komponen Pembantu SceneLogic ---
+
 
 
 function App() {
@@ -132,7 +129,7 @@ function App() {
   const planetRefs = useRef<(Mesh | null)[]>([]);
   const [selectedPlanetMesh, setSelectedPlanetMesh] = useState<Mesh | null>(null);
 
-  // State baru untuk mengontrol visibilitas planet lain saat panel terbuka
+  
   const [showOtherPlanetsWhenPanelOpen, setShowOtherPlanetsWhenPanelOpen] = useState(false);
 
 
@@ -145,34 +142,34 @@ function App() {
     }
   }, [loadedIndexes.current.size, planetPositions.length]);
 
-  // Efek untuk menambahkan/menghapus kelas CSS ke body saat panel info planet terbuka/tertutup (untuk blur)
+  
   useEffect(() => {
     if (selectedPlanet) {
-      document.body.classList.add('has-info-panel'); // Tambahkan kelas untuk blur
+      document.body.classList.add('has-info-panel'); 
     } else {
-      document.body.classList.remove('has-info-panel'); // Hapus kelas blur
+      document.body.classList.remove('has-info-panel'); 
     }
   }, [selectedPlanet]);
 
-  // Handler saat planet diklik
+  
   const handlePlanetClick = (planetName: string, index: number) => {
     console.log(`Planet ${planetName} diklik!`);
     setCurrentPlanetIndex(index);
-    setSelectedPlanet(planetData[index]); // Panel info akan muncul HANYA DI SINI
-    // Simpan mesh yang diklik untuk digunakan oleh SceneLogic
+    setSelectedPlanet(planetData[index]); 
+   
     if (planetRefs.current[index]) {
       setSelectedPlanetMesh(planetRefs.current[index]);
     }
-    // Reset toggle visibilitas saat planet baru diklik
+  
     setShowOtherPlanetsWhenPanelOpen(false);
   };
 
-  // Handler untuk navigasi ke planet berikutnya
+  
   const goToNextPlanet = () => {
     setCurrentPlanetIndex((prevIndex) => {
       const newIndex = Math.min(prevIndex + 1, planetPositions.length - 1);
-      // Jika panel sedang terbuka, perbarui selectedPlanet dan selectedPlanetMesh
-      if (selectedPlanet !== null) { // <-- KONDISI BARU
+     
+      if (selectedPlanet !== null) { 
         setSelectedPlanet(planetData[newIndex]);
         if (planetRefs.current[newIndex]) {
           setSelectedPlanetMesh(planetRefs.current[newIndex]);
@@ -182,12 +179,12 @@ function App() {
     });
   };
 
-  // Handler untuk navigasi ke planet sebelumnya
+ 
   const goToPrevPlanet = () => {
     setCurrentPlanetIndex((prevIndex) => {
       const newIndex = Math.max(prevIndex - 1, 0);
-      // Jika panel sedang terbuka, perbarui selectedPlanet dan selectedPlanetMesh
-      if (selectedPlanet !== null) { // <-- KONDISI BARU
+     
+      if (selectedPlanet !== null) { 
         setSelectedPlanet(planetData[newIndex]);
         if (planetRefs.current[newIndex]) {
           setSelectedPlanetMesh(planetRefs.current[newIndex]);
@@ -209,61 +206,59 @@ function App() {
     }
   }, []);
 
-  // Handler untuk menutup panel informasi planet
+  
   const handleCloseInfoPanel = () => {
-    setSelectedPlanet(null); // Tutup panel
-    setSelectedPlanetMesh(null); // Penting: Reset mesh yang dipilih agar OrbitControls mati
-    setShowOtherPlanetsWhenPanelOpen(false); // Reset toggle visibilitas saat panel ditutup
+    setSelectedPlanet(null); 
+    setSelectedPlanetMesh(null); 
+    setShowOtherPlanetsWhenPanelOpen(false); 
   };
 
   return (
     <div id="canvas-container">
-      {/* Teks Proyek dan Model AI */}
+      
       <div className="project-info">
         <p>Proyek: Penjelajah Tata Surya</p>
-        <p>Model AI: Granite</p>
+        <p>Model AI: IBM Granite</p>
       </div>
 
-      {/* Penjelasan Interaksi */}
+ 
       <div className="interaction-info">
         <p>Klik planet untuk informasi lebih lanjut dan interaksi AI.</p>
       </div>
 
       <Canvas
-        camera={{ position: [0, 0, 10], fov: 75 }} // Posisi kamera awal dan Field of View
-        shadows // Aktifkan shadows jika model Anda memilikinya
+        camera={{ position: [0, 0, 10], fov: 75 }} 
+        shadows 
       >
-        {/* Logika Scene dan Kamera */}
+        
         {isAllModelsLoaded && (
           <SceneLogic
             currentPlanetIndex={currentPlanetIndex}
             planetPositions={planetPositions}
             planetActualSizes={planetActualSizes}
             selectedPlanet={selectedPlanet}
-            selectedPlanetMesh={selectedPlanetMesh} // Teruskan mesh yang dipilih
+            selectedPlanetMesh={selectedPlanetMesh} 
             setPanelPosition={setPanelPosition}
           />
         )}
 
-        {/* Cahaya agar objek terlihat */}
-        <ambientLight intensity={0.5} />
-        <pointLight position={[0, 0, 0]} intensity={2} /> {/* Matahari di tengah sebagai sumber cahaya utama */}
 
-        {/* Latar belakang bintang-bintang */}
+        <ambientLight intensity={0.5} />
+        <pointLight position={[0, 0, 0]} intensity={2} /> 
+
+        
         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
 
-        {/* Render semua planet utama */}
         {planetPositions.map((pos, index) => (
           <Planet
             key={`planet-${index}`}
             modelPath={`/models/${planetData[index].name.toLowerCase()}.glb`}
             position={pos}
             scale={planetScales[index]}
-            onClick={() => handlePlanetClick(planetData[index].name, index)} // Handler klik planet
-            onLoad={(size) => handlePlanetLoad(index, size)} // Callback saat model dimuat untuk mendapatkan ukurannya
-            ref={(el) => { planetRefs.current[index] = el; }} // Menggunakan ref untuk menyimpan mesh
-            // Visible hanya jika tidak ada selectedPlanet, ATAU ini adalah selectedPlanet,
-            // ATAU showOtherPlanetsWhenPanelOpen adalah true (saat panel terbuka tapi user ingin melihat semua)
+            onClick={() => handlePlanetClick(planetData[index].name, index)} 
+            onLoad={(size) => handlePlanetLoad(index, size)} 
+            ref={(el) => { planetRefs.current[index] = el; }} 
+            
             visible={!selectedPlanet || selectedPlanet.name === planetData[index].name || showOtherPlanetsWhenPanelOpen}
           />
         ))}
@@ -282,7 +277,6 @@ function App() {
         planet={selectedPlanet}
         onClose={handleCloseInfoPanel}
         panelPosition={panelPosition}
-        // Teruskan state dan setter untuk tombol visibilitas
         showOtherPlanets={showOtherPlanetsWhenPanelOpen}
         onToggleShowOtherPlanets={() => setShowOtherPlanetsWhenPanelOpen(prev => !prev)}
       />
