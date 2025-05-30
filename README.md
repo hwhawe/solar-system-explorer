@@ -50,7 +50,7 @@ Proyek ini adalah monorepo yang menggunakan npm workspaces. Anda perlu menginsta
 ```bash
 npm install
 ```
-3. Konfigurasi Variabel Lingkungan:
+**3. Konfigurasi Variabel Lingkungan:**
 
 Anda memerlukan API token dari Replicate.com untuk menjalankan fungsi AI.
 
@@ -61,7 +61,7 @@ Tambahkan baris berikut ke file .env, ganti placeholder dengan token asli Anda:
 REPLICATE_API_TOKEN=r8_TOKEN_ANDA_DISINI
 VITE_API_URL=http://localhost:3001/api
 ```
-4. Jalankan Backend (Serverless Function Lokal):
+**4. Jalankan Backend (Serverless Function Lokal):**
    
 Buka terminal baru dan navigasi ke folder api.
 ```bash
@@ -74,7 +74,7 @@ atau pake nodemon
 npm install -g nodemon
 nodemon index.js
 ```
-5. Jalankan Frontend (Aplikasi React Lokal):
+**5. Jalankan Frontend (Aplikasi React Lokal):**
 
 Buka terminal baru lainnya dan navigasi ke folder client.
 ```bash
