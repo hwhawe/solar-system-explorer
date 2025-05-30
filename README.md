@@ -2,6 +2,8 @@
 
 Selamat datang di Penjelajah Tata Surya Interaktif! Aplikasi web ini memungkinkan Anda untuk menjelajahi planet-planet di tata surya kita dalam tampilan 3D yang dinamis, mendapatkan informasi detail tentang setiap planet, dan bahkan bertanya kepada AI tentang mereka.
 
+https://solar-system-explorer-lyart.vercel.app/
+
 ## ✨ Fitur Utama
 
 * **Model 3D Interaktif:** Jelajahi planet-planet utama tata surya dengan representasi 3D yang indah.
