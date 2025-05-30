@@ -217,12 +217,8 @@ function App() {
     <div id="canvas-container">
       
       <div className="project-info">
-        <p>Proyek: Penjelajah Tata Surya</p>
+        <p>Solar System Explorer</p>
         <p>Model AI: IBM Granite</p>
-      </div>
-
- 
-      <div className="interaction-info">
         <p>Klik planet untuk informasi lebih lanjut dan interaksi AI.</p>
       </div>
 
