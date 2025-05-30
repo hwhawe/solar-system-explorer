@@ -41,5 +41,45 @@ Ikuti langkah-langkah di bawah ini untuk mengatur dan menjalankan proyek di komp
 **1. Kloning Repository:**
 
 ```bash
-git clone [https://github.com/USERNAME_ANDA/solar-system-explorer.git](https://github.com/USERNAME_ANDA/solar-system-explorer.git)
+git clone [https://github.com/USERNAME_ANDA/solar-system-explorer.git](https://github.com/hwhawe/solar-system-explorer.git)
 cd solar-system-explorer
+```
+**2. Instal Dependensi:**
+
+Proyek ini adalah monorepo yang menggunakan npm workspaces. Anda perlu menginstal dependensi untuk proyek utama dan kedua sub-proyek (client dan api).
+```bash
+npm install
+```
+3. Konfigurasi Variabel Lingkungan:
+
+Anda memerlukan API token dari Replicate.com untuk menjalankan fungsi AI.
+
+Dapatkan API Token Anda dari akun Replicate.com Anda.
+Buat file bernama .env di root proyek Anda (solar-system-explorer/.env).
+Tambahkan baris berikut ke file .env, ganti placeholder dengan token asli Anda:
+```bash
+REPLICATE_API_TOKEN=r8_TOKEN_ANDA_DISINI
+VITE_API_URL=http://localhost:3001/api
+```
+4. Jalankan Backend (Serverless Function Lokal):
+   
+Buka terminal baru dan navigasi ke folder api.
+```bash
+cd api
+npm install
+npm start
+```
+atau pake nodemon
+```bash
+npm install -g nodemon
+nodemon index.js
+```
+5. Jalankan Frontend (Aplikasi React Lokal):
+
+Buka terminal baru lainnya dan navigasi ke folder client.
+```bash
+cd client
+npm install
+npm run dev
+```
+Aplikasi akan terbuka di browser Anda (biasanya di http://localhost:5174/).
