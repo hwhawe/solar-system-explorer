@@ -41,7 +41,7 @@ Ikuti langkah-langkah di bawah ini untuk mengatur dan menjalankan proyek di komp
 **1. Kloning Repository:**
 
 ```bash
-git clone [https://github.com/USERNAME_ANDA/solar-system-explorer.git](https://github.com/hwhawe/solar-system-explorer.git)
+git clone (https://github.com/hwhawe/solar-system-explorer.git)
 cd solar-system-explorer
 ```
 **2. Instal Dependensi:**
